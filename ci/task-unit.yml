@@ -3,15 +3,10 @@ platform: linux
 
 image_resource:
   type: docker-image
-  source: {repository:java}
+  source: {repository: java}
 
 inputs:
 - name: cities-repo
 
 run:
-  path: bash
-  args:
-  - -c
-  - |
-    cd cities-repo/cities-service
-    ./gradlew build
+  path: cities-repo/ci/task_unit_tests.sh
