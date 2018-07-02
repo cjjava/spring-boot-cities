@@ -1,0 +1,13 @@
+resources:
+- name: cities-repo
+  type: git
+  source:
+    uri: https://gitee.com/cloud-native-java/spring-boot-cities.git
+    branch: master
+jobs:
+- name: run-unit-test
+  plan:
+  - get: cities-repo
+    trigger: true
+  - task: run-unit
+    file: cities-repo/ci/task-unit.yml
