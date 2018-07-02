@@ -1,0 +1,4 @@
+rootProject.name = 'spring-boot-cities'
+include 'cities-service'
+include 'acceptance-tests'
+
