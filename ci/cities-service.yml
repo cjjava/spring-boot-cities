@@ -4,6 +4,7 @@ resources:
   source:
     uri: https://gitee.com/cloud-native-java/spring-boot-cities.git
     branch: master
+
 jobs:
 - name: run-unit-test
   plan:
