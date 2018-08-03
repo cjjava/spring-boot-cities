@@ -11,4 +11,6 @@ inputs:
 - name: cities-repo
 
 run:
-  path: cities-repo/ci/task_unit_tests.sh
+  path: /bin/bash
+  args:
+    - cities-repo/ci/task_unit_tests.sh
