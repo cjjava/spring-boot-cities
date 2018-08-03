@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 function buildGradle() {
-    chmod +x ./gradlew
+    chmod u+x ./gradlew
     ./gradlew clean build
 }
 
