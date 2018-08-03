@@ -13,4 +13,4 @@ inputs:
 run:
   path: /bin/bash
   args:
-    - cities-repo/ci/task_unit_tests.sh
+    - cities-repo/ci/build.sh
