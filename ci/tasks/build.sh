@@ -23,5 +23,5 @@ SCRIPTS_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
     echo "No functions.sh found"
 
 
-cd ${ROOT_FOLDER}/${REPO}
+cd ${ROOT_FOLDER}/${REPO}/cities-service
 build "${PROJECT_TYPE}"

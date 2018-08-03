@@ -1,4 +1,5 @@
 function buildGradle() {
+    chmod +x ./gradlew
     ./gradlew clean build
 }
 
