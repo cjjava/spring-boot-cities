@@ -1,16 +1,22 @@
 ---
 platform: linux
-
 image_resource:
   type: docker-image
   source:
     repository: nexus.cjoop.top/openjdk
     tag: 8-jdk
-
 inputs:
-- name: cities-repo
-
+  - name: repo
+outputs:
+  - name: out
 run:
   path: /bin/bash
   args:
-    - cities-repo/ci/task_unit_tests.sh
+    - repo/ci/tasks/build.sh
+
+caches:
+  - path: gradle
+  - path: maven
+
+params:
+  PROJECT_TYPE: 

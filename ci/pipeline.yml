@@ -1,0 +1,18 @@
+---
+resources:
+- name: repo
+  type: git
+  source:
+    uri: ((app-url))
+    branch: ((app-branch))
+
+jobs:
+- name: run-unit-test
+  serial: true
+  plan:
+  - aggregate:
+    - get: repo
+  - task: run-unit
+    file: repo/ci/tasks/build.yml
+    params:
+      PROJECT_TYPE: ((project-type))
