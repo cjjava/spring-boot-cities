@@ -1,3 +1,4 @@
+#!/usr/bin/env bash
 function buildGradle() {
     chmod +x ./gradlew
     ./gradlew clean build
