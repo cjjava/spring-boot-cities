@@ -20,7 +20,6 @@ jobs:
 - name: run-unit-test
   plan:
   - get: repo
-    trigger: true
   - task: run-unit
     file: repo/ci/tasks/build.yml
     params:
@@ -29,7 +28,6 @@ jobs:
 - name: run-acceptance-tests
   plan:
   - get: repo
-    trigger: true
     passed: [run-unit-test]
   - task: run-unit
     file: repo/ci/tasks/build.yml
@@ -44,5 +42,3 @@ jobs:
     config:
       params:
         CITY_SERVICE_URI: http://cities-test.local.pcfdev.io
-        CITY_SERVICE_PORT: 80
-

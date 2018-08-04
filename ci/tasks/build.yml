@@ -6,17 +6,17 @@ image_resource:
     repository: nexus.cjoop.top/openjdk
     tag: 8-jdk
 inputs:
-  - name: repo
+- name: repo
 outputs:
-  - name: out
+- name: out
 run:
   path: /bin/bash
   args:
-    - repo/ci/tasks/build.sh
+  - repo/ci/tasks/build.sh
 
 caches:
-  - path: gradle
-  - path: maven
+- path: gradle
+- path: maven
 
 params:
   PROJECT_TYPE: 
