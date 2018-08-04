@@ -6,13 +6,43 @@ resources:
     uri: ((app-url))
     branch: ((app-branch))
 
+- name: cf-test
+  type: cf
+  source:
+    api: https://api.local.pcfdev.io
+    username: user
+    password: pass
+    organization: pcfdev-org
+    space: test
+    skip_cert_check: true
+
 jobs:
 - name: run-unit-test
-  serial: true
   plan:
-  - aggregate:
-    - get: repo
+  - get: repo
+    trigger: true
   - task: run-unit
     file: repo/ci/tasks/build.yml
     params:
       PROJECT_TYPE: ((project-type))
+
+- name: run-acceptance-tests
+  plan:
+  - get: repo
+    trigger: true
+    passed: [run-unit-test]
+  - task: run-unit
+    file: repo/ci/tasks/build.yml
+  - put: cf-test
+    params:
+      manifest: repo/cities-service/manifest-test.yml
+      environment_variables:
+        current_app_name: cities-service-test
+        path: out/cities-service.jar
+  - task: run-acceptance-tests
+    file: repo/ci/tasks/acceptance-tests.yml
+    config:
+      params:
+        CITY_SERVICE_URI: http://cities-test.local.pcfdev.io
+        CITY_SERVICE_PORT: 80
+
