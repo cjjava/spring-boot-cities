@@ -5,11 +5,16 @@ image_resource:
   source:
     repository: nexus.cjoop.top/openjdk
     tag: 8-jdk
-
 inputs:
 - name: repo
-
 run:
   path: /bin/bash
   args:
   - repo/ci/tasks/acceptance-tests.sh
+
+caches:
+- path: gradle
+- path: maven
+
+params:
+  PROJECT_TYPE:
