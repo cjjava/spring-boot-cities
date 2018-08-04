@@ -39,6 +39,6 @@ jobs:
         path: out/cities-service.jar
   - task: run-acceptance-tests
     file: repo/ci/tasks/acceptance-tests.yml
-    config:
-      params:
+    params:
         CITY_SERVICE_URI: http://cities-test.local.pcfdev.io
+        CITY_SERVICE_PORT: 80
