@@ -34,12 +34,10 @@ jobs:
         source:
           repository: nexus.cjoop.top:1443/openjdk
           tag: 8-jdk
-
       inputs:
       - name: cities-repo
       outputs:
       - name: cities-service-build
-
       run:
         path: bash
         args:
@@ -58,11 +56,9 @@ jobs:
         source:
           repository: nexus.cjoop.top:1443/openjdk
           tag: 8-jdk
-
       inputs:
       - name: cities-repo
       - name: cities-service-build
-
       run:
         path: bash
         args:
