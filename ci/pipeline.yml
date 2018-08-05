@@ -33,7 +33,7 @@ jobs:
           ./gradlew build
           cp build/libs/cities-service.jar ../../cities-service-build/
 
-  - task: show-some-files
+  - task: resource-cf-test
     config:
       platform: linux
       image_resource:
@@ -42,11 +42,13 @@ jobs:
           repository: nexus.cjoop.top:1443/cf-cli-resource
           tag: latest
       inputs:
-      - name: cities-repo
       - name: cities-service-build
+      - name: cities-repo
       run:
         path: bash
         args:
         - -c
         - |
+          ls cities-repo
           ls cities-service-build
+          cf login -a https://api.local.pcfdev.io --skip-ssl-validation -u admin -p admin -o pcfdev-org -s test
