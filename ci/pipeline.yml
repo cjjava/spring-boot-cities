@@ -1,11 +1,4 @@
 ---
-resource_types:
-- name: cf-cli-resource
-  type: docker-image
-  source:
-    repository: nexus.cjoop.top:1443/cf-cli-resource
-    tag: latest
-
 resources:
 - name: repo
   type: git
@@ -13,19 +6,11 @@ resources:
     uri: ((app-url))
     branch: ((app-branch))
 
-- name: cf-test
-  type: cf-cli-resource
-  source:
-    api: https://api.local.pcfdev.io
-    username: user
-    password: pass
-    org: pcfdev-org
-    space: test
-    skip_cert_check: true
-
 jobs:
 - name: run-acceptance-tests
   plan:
   - get: repo
   - task: run-unit
     file: repo/ci/tasks/build.yml
+  - task: show-files
+    file: repo/ci/tasks/show.yml
