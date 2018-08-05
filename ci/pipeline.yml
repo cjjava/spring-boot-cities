@@ -41,8 +41,9 @@ jobs:
         - -c
         - |
           export TERM=${TERM:-dumb}
-          ./cities-repo/cities-service/gradlew build
-          cp ./cities-repo/cities-service/build/libs/cities-service.jar ./cities-service-build/
+          cd cities-repo/cities-service
+          ./gradlew build
+          ls build/libs/
 
   - put: resource-cf-test
     params:
