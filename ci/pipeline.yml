@@ -43,11 +43,7 @@ jobs:
           export TERM=${TERM:-dumb}
           cd cities-repo/cities-service
           ./gradlew build
-          ls build/libs/
 
-  - put: resource-cf-test
-    params:
-      manifest: cities-repo/cities-service/manifest-test.yml
   - task: run-acceptance-tests
     config:
       platform: linux
@@ -59,11 +55,10 @@ jobs:
 
       inputs:
       - name: cities-repo
-      - name: cities-service-build
 
       run:
         path: bash
         args:
         - -c
         - |
-          ls cities-service-build
+          ls cities-repo/cities-service/build/libs/
