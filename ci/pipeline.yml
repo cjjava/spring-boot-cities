@@ -1,25 +1,10 @@
 ---
-resource_types:
-- name: cf-cli-resource
-  type: docker-image
-  source:
-    repository: nexus.cjoop.top:1443/cf-cli-resource
-    tag: latest
-
 resources:
 - name: cities-repo
   type: git
   source:
     uri: https://gitee.com/cloud-native-java/spring-boot-cities.git
     branch: master
-
-- name: resource-cf-test
-  type: cf-cli-resource
-  source:
-    api: https://api.local.pcfdev.io
-    username: admin
-    password: admin
-    skip_cert_check: true
 
 jobs:
 - name: run-acceptance-tests
@@ -54,8 +39,8 @@ jobs:
       image_resource:
         type: docker-image
         source:
-          repository: nexus.cjoop.top:1443/openjdk
-          tag: 8-jdk
+          repository: nexus.cjoop.top:1443/cf-cli-resource
+          tag: latest
       inputs:
       - name: cities-repo
       - name: cities-service-build
@@ -65,10 +50,3 @@ jobs:
         - -c
         - |
           ls cities-service-build
-
-  - put: resource-cf-test
-    resource: resource-cf-test
-    params:
-      command: push
-      app_name: cities-test
-      f: cities-repo/cities-service/manifest-test.yml
