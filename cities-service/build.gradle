@@ -22,6 +22,10 @@ repositories {
 	maven { url "http://nexus.cjoop.top:8081/repository/maven-public/"}
 }
 
+jar {
+	baseName = 'cities-service'
+	version = ''
+}
 
 ext {
 	springCloudVersion = 'Edgware.SR3'

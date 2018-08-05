@@ -1,41 +1,56 @@
 ---
 resources:
-- name: resource-cities
+- name: cities-repo
   type: git
   source:
     uri: https://gitee.com/cloud-native-java/spring-boot-cities.git
     branch: master
 
 jobs:
-- name: job-pass-files
+- name: run-acceptance-tests
   public: true
   plan:
-  - get: resource-cities
-  - task: create-some-files
+  - get: cities-repo
+  - task: run-unit
     config:
       platform: linux
       image_resource:
         type: docker-image
-        source: {repository: "nexus.cjoop.top:1443/busybox"}
+        source:
+          repository: nexus.cjoop.top:1443/openjdk
+          tag: 8-jdk
 
       inputs:
-      - name: resource-cities
+      - name: cities-repo
       outputs:
-      - name: some-files
+      - name: cities-service-build
 
       run:
-        path: resource-cities/ci/task-outputs-to-inputs/create_some_files.sh
+        path: bash
+        args:
+        - -c
+        - |
+          export TERM=${TERM:-dumb}
+          cd cities-repo/cities-service
+          gradle build
+          cp build/libs/cities-service.jar ../../cities-service-build/
 
   - task: show-some-files
     config:
       platform: linux
       image_resource:
         type: docker-image
-        source: {repository: "nexus.cjoop.top:1443/busybox"}
+        source:
+          repository: nexus.cjoop.top:1443/openjdk
+          tag: 8-jdk
 
       inputs:
-      - name: resource-cities
-      - name: some-files
+      - name: cities-repo
+      - name: cities-service-build
 
       run:
-        path: resource-cities/ci/task-outputs-to-inputs/show_files.sh
+        path: bash
+        args:
+        - -c
+        - |
+          ls cities-service-build
