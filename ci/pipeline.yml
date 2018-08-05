@@ -32,7 +32,7 @@ jobs:
         - |
           export TERM=${TERM:-dumb}
           cd cities-repo/cities-service
-          gradle build
+          ./gradlew build
           cp build/libs/cities-service.jar ../../cities-service-build/
 
   - task: show-some-files
