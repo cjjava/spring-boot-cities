@@ -49,6 +49,6 @@ jobs:
         args:
         - -c
         - |
-          ls cities-repo
+          ls cities-repo/cities-service/
           ls cities-service-build
           cf login -a https://api.local.pcfdev.io --skip-ssl-validation -u admin -p admin -o pcfdev-org -s test
