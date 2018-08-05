@@ -1,16 +1,41 @@
 ---
 resources:
-- name: repo
+- name: cities-repo
   type: git
   source:
     uri: ((app-url))
     branch: ((app-branch))
 
 jobs:
-- name: run-acceptance-tests
+- name: job-pass-files
+  public: true
   plan:
-  - get: repo
-  - task: run-unit
-    file: repo/ci/tasks/build.yml
-  - task: show-files
-    file: repo/ci/tasks/show.yml
+  - get: cities-repo
+  - task: create-some-files
+    config:
+      platform: linux
+      image_resource:
+        type: docker-image
+        source: {repository: busybox}
+
+      inputs:
+      - name: cities-repo
+      outputs:
+      - name: some-files
+
+      run:
+        path: cities-repo/ci/task-outputs-to-inputs/create_some_files.sh
+
+  - task: show-some-files
+    config:
+      platform: linux
+      image_resource:
+        type: docker-image
+        source: {repository: busybox}
+
+      inputs:
+      - name: cities-repo
+      - name: some-files
+
+      run:
+        path: cities-repo/ci/task-outputs-to-inputs/show_files.sh
