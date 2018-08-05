@@ -71,8 +71,8 @@ jobs:
           ls cities-service-build
 
   - put: resource-cf-test
-         resource: resource-cf-test
-         params:
-           command: push
-           app_name: cities-test
-           f: cities-repo/cities-service/manifest-test.yml
+    resource: resource-cf-test
+    params:
+      command: push
+      app_name: cities-test
+      f: cities-repo/cities-service/manifest-test.yml
