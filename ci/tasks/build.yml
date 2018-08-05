@@ -7,8 +7,6 @@ image_resource:
     tag: 8-jdk
 inputs:
 - name: repo
-outputs:
-- name: cities-service-build
 run:
   path: /bin/bash
   args:

@@ -7,12 +7,12 @@ resources:
     branch: ((app-branch))
 
 - name: cf-test
-  type: cf
+  type: cf-cli-resource
   source:
     api: https://api.local.pcfdev.io
     username: user
     password: pass
-    organization: pcfdev-org
+    org: pcfdev-org
     space: test
     skip_cert_check: true
 
@@ -22,13 +22,11 @@ jobs:
   - get: repo
   - task: run-unit
     file: repo/ci/tasks/build.yml
-    params:
-      PROJECT_TYPE: ((project-type))
   - put: cf-test
+    resource: cf-test
     params:
-      manifest: repo/cities-service/manifest-test.yml
-      environment_variables:
-        path: cities-service-build/cities-service.jar
+      command: push
+      f: repo/cities-service/manifest-test.yml
   - task: run-acceptance-tests
     file: repo/ci/tasks/acceptance-tests.yml
     params:
