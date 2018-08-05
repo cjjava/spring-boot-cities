@@ -3,7 +3,7 @@ resources:
 - name: resource-tutorial
   type: git
   source:
-    uri: https://github.com/starkandwayne/concourse-tutorial.git
+    uri: https://gitee.com/cloud-native-java/concourse-tutorial.git
     branch: develop
 
 jobs:
@@ -16,7 +16,7 @@ jobs:
       platform: linux
       image_resource:
         type: docker-image
-        source: {repository: busybox}
+        source: {repository: "nexus.cjoop.top:1443/busybox"}
 
       inputs:
       - name: resource-tutorial
@@ -31,7 +31,7 @@ jobs:
       platform: linux
       image_resource:
         type: docker-image
-        source: {repository: busybox}
+        source: {repository: "nexus.cjoop.top:1443/busybox"}
 
       inputs:
       - name: resource-tutorial
