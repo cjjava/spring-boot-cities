@@ -51,7 +51,8 @@ jobs:
         - |
           ls cities-repo/cities-service/
           ls cities-service-build
-          cp -f cities-service-build/cities-service.jar cities-repo/cities-service/build/libs/
+          mkdir -p cities-repo/cities-service/build/libs/
+          cp cities-service-build/cities-service.jar cities-repo/cities-service/build/libs/
           cf login -a https://api.local.pcfdev.io --skip-ssl-validation -u admin -p admin -o pcfdev-org -s test
           cd cities-repo/cities-service
           cf push -f manifest-test.yml -n cities-test
