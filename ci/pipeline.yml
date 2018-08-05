@@ -33,6 +33,7 @@ jobs:
     resource: cf-test
     params:
       command: push
+      app_name: cities-test
       f: repo/cities-service/manifest-test.yml
   - task: run-acceptance-tests
     file: repo/ci/tasks/acceptance-tests.yml
