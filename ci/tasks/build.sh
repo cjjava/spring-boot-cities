@@ -25,3 +25,5 @@ SCRIPTS_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 
 cd ${ROOT_FOLDER}/${REPO}/cities-service
 build "${PROJECT_TYPE}"
+
+ls build/libs/

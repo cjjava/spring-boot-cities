@@ -17,22 +17,14 @@ resources:
     skip_cert_check: true
 
 jobs:
-- name: run-unit-test
+- name: run-acceptance-tests
   plan:
   - get: repo
-    trigger: true
+    passed: [run-unit-test]
   - task: run-unit
     file: repo/ci/tasks/build.yml
     params:
       PROJECT_TYPE: ((project-type))
-
-- name: run-acceptance-tests
-  plan:
-  - get: repo
-    trigger: true
-    passed: [run-unit-test]
-  - task: run-unit
-    file: repo/ci/tasks/build.yml
   - put: cf-test
     params:
       manifest: repo/cities-service/manifest-test.yml
