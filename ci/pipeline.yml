@@ -37,8 +37,7 @@ jobs:
     params:
       manifest: repo/cities-service/manifest-test.yml
       environment_variables:
-        current_app_name: cities-service-test
-        path: out/cities-service.jar
+        path: repo/cities-service/build/libs/cities-service-1.5.14-SNAPSHOT.jar
   - task: run-acceptance-tests
     file: repo/ci/tasks/acceptance-tests.yml
     params:
