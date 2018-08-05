@@ -6,6 +6,16 @@ resources:
     uri: https://gitee.com/cloud-native-java/spring-boot-cities.git
     branch: master
 
+- name: resource-cf-test
+  type: cf
+  source:
+    api: https://api.local.pcfdev.io
+    username: admin
+    password: admin
+    organization: pcfdev-org
+    space: test
+    skip_cert_check: true
+
 jobs:
 - name: run-acceptance-tests
   public: true
@@ -34,7 +44,11 @@ jobs:
           cd cities-repo/cities-service
           ./gradlew build
           cp build/libs/cities-service.jar ../../cities-service-build/
-
+  - put: resource-cf-test
+    params:
+      manifest: cities-repo/cities-service/manifest-test.yml
+      environment_variables:
+        path: cities-service-build/cities-service.jar
   - task: show-some-files
     config:
       platform: linux
