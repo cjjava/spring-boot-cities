@@ -48,8 +48,6 @@ jobs:
   - put: resource-cf-test
     params:
       manifest: cities-repo/cities-service/manifest-test.yml
-      environment_variables:
-        path: cities-service-build/cities-service.jar
   - task: run-acceptance-tests
     config:
       platform: linux
