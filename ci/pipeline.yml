@@ -1,4 +1,11 @@
 ---
+resource_types:
+- name: cf-cli-resource
+  type: docker-image
+  source:
+    repository: nulldriver/cf-cli-resource
+    tag: latest
+
 resources:
 - name: cities-repo
   type: git
@@ -7,13 +14,11 @@ resources:
     branch: master
 
 - name: resource-cf-test
-  type: cf
+  type: cf-cli-resource
   source:
     api: https://api.local.pcfdev.io
     username: admin
     password: admin
-    organization: pcfdev-org
-    space: test
     skip_cert_check: true
 
 jobs:
@@ -44,11 +49,7 @@ jobs:
           cd cities-repo/cities-service
           ./gradlew build
           cp build/libs/cities-service.jar ../../cities-service-build/
-  - put: resource-cf-test
-    params:
-      manifest: cities-repo/cities-service/manifest-test.yml
-      environment_variables:
-        path: cities-service-build/cities-service.jar
+
   - task: show-some-files
     config:
       platform: linux
@@ -68,3 +69,10 @@ jobs:
         - -c
         - |
           ls cities-service-build
+
+  - put: resource-cf-test
+         resource: resource-cf-test
+         params:
+           command: push
+           app_name: cities-test
+           f: cities-repo/cities-service/manifest-test.yml
