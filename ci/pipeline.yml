@@ -29,14 +29,3 @@ jobs:
   - get: repo
   - task: run-unit
     file: repo/ci/tasks/build.yml
-  - put: cf-test
-    resource: cf-test
-    params:
-      command: push
-      app_name: cities-test
-      f: repo/cities-service/manifest-test.yml
-  - task: run-acceptance-tests
-    file: repo/ci/tasks/acceptance-tests.yml
-    params:
-        CITY_SERVICE_URI: http://cities-test.local.pcfdev.io
-        CITY_SERVICE_PORT: 80
