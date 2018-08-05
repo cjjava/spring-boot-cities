@@ -34,7 +34,7 @@ jobs:
         source: {repository: "nexus.cjoop.top:1443/busybox"}
 
       inputs:
-      - name: resource-tutorial
+      - name: resource-cities
       - name: some-files
 
       run:
