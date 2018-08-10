@@ -38,13 +38,11 @@ jobs:
         - -c
         - |
           export TERM=${TERM:-dumb}
-          mkdir -p cities-service/build/libs/
+          mkdir -p cities-service-build/build/libs/
           cd cities-repo/cities-service
           ./gradlew build
+          cp manifest-test.yml ../../cities-service-build/
           cp build/libs/cities-service.jar ../../cities-service-build/build/libs/
-
   - put: resource-cf-test
     params:
-      manifest: cities-repo/cities-service/manifest-test.yml
-      environment_variables:
-        path: cities-service-build
+      manifest: cities-service-build/manifest-test.yml
