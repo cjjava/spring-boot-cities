@@ -5,6 +5,13 @@ resources:
   source:
     uri: https://gitee.com/cloud-native-java/spring-boot-cities.git
     branch: master
+- name: release-time
+  type: time
+  source:
+    days:
+    - Friday
+    start: 8:00 +0800
+    stop: 8:30 +0800
 - name: resource-cf-test
   type: cf
   source:
@@ -16,10 +23,15 @@ resources:
     skip_cert_check: true
 
 jobs:
-- name: run-acceptance-tests
-  public: true
+- name: run-unit-test
   plan:
   - get: cities-repo
+  - task: run-unit
+    file: cities-repo/ci/task-unit.yml
+- name: run-acceptance-tests
+  plan:
+  - get: cities-repo
+    passed: [run-unit-test]
   - task: run-unit
     file: cities-repo/ci/tasks/build.yml
   - put: resource-cf-test
