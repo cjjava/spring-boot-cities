@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 function buildGradle() {
-    chmod u+x ./gradlew
-    ./gradlew clean build
+    ./gradlew build
+    cp build/libs/cities-service.jar ${ROOT_FOLDER}/cities-service-build/build/libs/
 }
 
 function buildMaven() {

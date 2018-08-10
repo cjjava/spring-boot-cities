@@ -6,13 +6,13 @@ image_resource:
     repository: nexus.cjoop.top:18443/library/openjdk
     tag: 8-jdk
 inputs:
-- name: repo
+- name: cities-repo
 outputs:
-- name: out
+- name: cities-service-build
 run:
-  path: /bin/bash
+  path: bash
   args:
-  - repo/ci/tasks/build.sh
+  - cities-repo/ci/tasks/build.sh
 
 caches:
 - path: gradle

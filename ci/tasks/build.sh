@@ -3,7 +3,7 @@ set -e
 set -x
 
 export ROOT_FOLDER=$( pwd )
-export REPO=repo
+export REPO=cities-repo
 
 M2_HOME="${HOME}/.m2"
 M2_CACHE="${ROOT_FOLDER}/maven"
@@ -22,6 +22,7 @@ SCRIPTS_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 [[ -f "${SCRIPTS_DIR}/functions.sh" ]] && source "${SCRIPTS_DIR}/functions.sh" || \
     echo "No functions.sh found"
 
-
+mkdir -p ${ROOT_FOLDER}/cities-service-build/build/libs/
+cp ${ROOT_FOLDER}/${REPO}/cities-service/manifest-test.yml ${ROOT_FOLDER}/cities-service-build/
 cd ${ROOT_FOLDER}/${REPO}/cities-service
 build "${PROJECT_TYPE}"
