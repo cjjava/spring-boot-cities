@@ -1,3 +1,7 @@
 /.gradle
 /.idea
 /*.iml
+/.project
+/acceptance-tests/.classpath
+/acceptance-tests/.project
+/cities-service/.settings

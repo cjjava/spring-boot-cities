@@ -5,6 +5,15 @@ resources:
   source:
     uri: https://gitee.com/cloud-native-java/spring-boot-cities.git
     branch: master
+- name: resource-cf-test
+  type: cf
+  source:
+    api: https://api.local.pcfdev.io
+    username: admin
+    password: admin
+    organization: pcfdev-org
+    space: test
+    skip_cert_check: true
 
 jobs:
 - name: run-acceptance-tests
@@ -33,26 +42,8 @@ jobs:
           ./gradlew build
           cp build/libs/cities-service.jar ../../cities-service-build/
 
-  - task: resource-cf-test
-    config:
-      platform: linux
-      image_resource:
-        type: docker-image
-        source:
-          repository: nexus.cjoop.top:1443/cf-cli-resource
-          tag: latest
-      inputs:
-      - name: cities-service-build
-      - name: cities-repo
-      run:
-        path: bash
-        args:
-        - -c
-        - |
-          ls cities-repo/cities-service/
-          ls cities-service-build
-          mkdir -p cities-repo/cities-service/build/libs/
-          cp cities-service-build/cities-service.jar cities-repo/cities-service/build/libs/
-          cf login -a https://api.local.pcfdev.io --skip-ssl-validation -u admin -p admin -o pcfdev-org -s test
-          cd cities-repo/cities-service
-          cf push -f manifest-test.yml -n cities-test
+  - put: resource-cf-test
+    params:
+      manifest: cities-repo/cities-service/manifest-test.yml
+      environment_variables:
+        path: cities-service-build/cities-service.jar
