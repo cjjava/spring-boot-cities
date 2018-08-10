@@ -6,11 +6,11 @@ image_resource:
     repository: nexus.cjoop.top:18443/library/openjdk
     tag: 8-jdk
 inputs:
-- name: repo
+- name: cities-repo
 run:
   path: /bin/bash
   args:
-  - repo/ci/tasks/acceptance-tests.sh
+  - cities-repo/ci/tasks/acceptance-tests.sh
 
 caches:
 - path: gradle
