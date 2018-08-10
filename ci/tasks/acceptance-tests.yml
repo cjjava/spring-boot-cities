@@ -3,7 +3,7 @@ platform: linux
 image_resource:
   type: docker-image
   source:
-    repository: nexus.cjoop.top:1443/openjdk
+    repository: nexus.cjoop.top:18443/library/openjdk
     tag: 8-jdk
 inputs:
 - name: repo
