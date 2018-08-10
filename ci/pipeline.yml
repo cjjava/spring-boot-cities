@@ -25,3 +25,7 @@ jobs:
   - put: resource-cf-test
     params:
       manifest: cities-service-build/manifest-test.yml
+  - task: run-acceptance-tests
+    file: cities-repo/ci/tasks/acceptance-tests.yml
+    params:
+      CITY_SERVICE_URI: http://cities-test.local.pcfdev.io
