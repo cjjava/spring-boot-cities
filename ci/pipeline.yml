@@ -21,7 +21,7 @@ jobs:
   plan:
   - get: cities-repo
   - task: run-unit
-    file: cities-repo/ci/task/build.yml
+    file: cities-repo/ci/tasks/build.yml
   - put: resource-cf-test
     params:
       manifest: cities-service-build/manifest-test.yml
