@@ -33,7 +33,7 @@ jobs:
   plan:
   - get: cities-repo
   - task: run-unit
-    file: cities-repo/ci/task-unit.yml
+    file: cities-repo/ci/tasks/build.yml
 - name: run-acceptance-tests
   plan:
   - get: cities-repo
