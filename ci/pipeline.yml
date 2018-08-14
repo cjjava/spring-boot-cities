@@ -3,7 +3,7 @@ resources:
 - name: cities-repo
   type: git
   source:
-    uri: https://gitee.com/cloud-native-java/spring-boot-cities.git
+    uri: https://github.com/cjjava/spring-boot-cities.git
     branch: master
 - name: release-time
   type: time
@@ -12,6 +12,12 @@ resources:
     - Friday
     start: 8:00 +0800
     stop: 8:30 +0800
+- name: cities-release
+  type: github-release
+  source:
+    user: cjjava
+    repository: spring-boot-cities
+    access_token:
 - name: resource-cf-test
   type: cf
   source:
@@ -41,3 +47,16 @@ jobs:
     file: cities-repo/ci/tasks/acceptance-tests.yml
     params:
       CITY_SERVICE_URI: http://cities-test.local.pcfdev.io
+- name: publish-release
+  plan:
+  - get: cities-repo
+    passed: [run-acceptance-tests]
+  - get: release-time
+  - task: run-unit
+    file: cities-repo/ci/tasks/build.yml
+  - put: cities-release
+    params:
+      name: cities-repo/cities-service/release/name.txt
+      tag: cities-repo/cities-service/release/tag.txt
+      globs:
+      - cities-service-build/build/libs/cities-service.jar
