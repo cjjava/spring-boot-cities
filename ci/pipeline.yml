@@ -11,8 +11,8 @@ resources:
   source:
     days:
     - Tuesday
-    start: 20:30 +0800
-    stop: 21:30 +0800
+    start: 21:20 +0800
+    stop: 22:20 +0800
 - name: cities-release
   type: github-release
   source:
@@ -47,7 +47,7 @@ resources:
     username: admin
     password: admin
     organization: pcfdev-org
-    space: staging
+    space: prod
     skip_cert_check: true
 
 jobs:
@@ -99,10 +99,9 @@ jobs:
   - put: resource-cf-staging
     params:
       manifest: cities-repo/cities-service/manifest-staging.yml
-      environment_variables:
-        path: cities-release/cities-service.jar
+      path: cities-release/cities-service.jar
   - task: run-acceptance-tests
-    file: cities-repo/ci/task-acceptance-tests.yml
+    file: cities-repo/ci/tasks/acceptance-tests.yml
     params:
       CITY_SERVICE_URI: http://cities-staging.local.pcfdev.io
 
@@ -117,6 +116,5 @@ jobs:
   - put: resource-cf-prod
     params:
       manifest: cities-repo/cities-service/manifest.yml
-      environment_variables:
-        current_app_name: cities-service
-        path: cities-release/cities-service.jar
+      current_app_name: cities-service
+      path: cities-release/cities-service.jar
